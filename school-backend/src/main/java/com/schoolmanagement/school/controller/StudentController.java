@@ -8,7 +8,10 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/students")
-@CrossOrigin(origins = "http://localhost:5173") // Allow your React app port
+@CrossOrigin(origins = {
+        "http://localhost:5173",
+        "http://localhost:3000"
+})// Allow your React app port
 public class StudentController {
 
     private final StudentService service;

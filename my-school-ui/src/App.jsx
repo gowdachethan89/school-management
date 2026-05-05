@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import './App.css';
 
-const API_BASE_URL = "http://localhost:8080/students";
+const API_BASE_URL = "https://school-management-c5dg.onrender.com/students";
 
 function App() {
   const [students, setStudents] = useState([]);
