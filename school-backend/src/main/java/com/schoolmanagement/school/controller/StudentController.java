@@ -10,7 +10,8 @@ import java.util.List;
 @RequestMapping("/students")
 @CrossOrigin(origins = {
         "http://localhost:5173",
-        "http://localhost:3000"
+        "http://localhost:3000",
+        "https://school-management-one-beryl.vercel.app"
 })// Allow your React app port
 public class StudentController {
 
