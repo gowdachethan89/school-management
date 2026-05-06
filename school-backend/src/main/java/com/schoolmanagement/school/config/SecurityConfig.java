@@ -43,7 +43,7 @@ public class SecurityConfig {
                         .anyRequest().authenticated()                      // Authentication: Required for all else
                 )
                 .formLogin(form -> form
-                        .loginProcessingUrl("/public/login")
+                        .loginProcessingUrl("/api/public/login")
                         .successHandler(loginSuccessHandler)
                         .failureHandler(loginFailureHandler)
                         .permitAll()

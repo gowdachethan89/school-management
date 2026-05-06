@@ -14,21 +14,28 @@ import java.util.HashMap;
 import java.util.Map;
 
 @RestController
-@RequestMapping("public/")
+@RequestMapping("/api/public")
 public class AuthController {
 
     @Autowired
     private UserService userService;
 
-    @PostMapping("signup")
+    @PostMapping("/signup")
     public String signUp(@RequestBody User user) {
         return userService.registerUser(user);
     }
 
-    @GetMapping("login")
+    @GetMapping("/login")
     public ResponseEntity<Map<String, String>> getLogin() {
         Map<String, String> response = new HashMap<>();
         response.put("message", "Please use POST to /api/public/login with username and password in form data or JSON.");
+        return ResponseEntity.ok(response);
+    }
+
+    @PostMapping("/logout")
+    public ResponseEntity<Map<String, String>> getLogout() {
+        Map<String, String> response = new HashMap<>();
+        response.put("message", "Logout successful.");
         return ResponseEntity.ok(response);
     }
 }
