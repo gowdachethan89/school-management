@@ -25,7 +25,7 @@ public class UserService {
         user.setPassword(passwordEncoder.encode(user.getPassword()));
 
         // 3. Assign default role
-        user.setRole("ROLE_USER");
+        user.setRole("ROLE_TEACHER");
 
         userRepository.save(user);
         return "User registered successfully!";

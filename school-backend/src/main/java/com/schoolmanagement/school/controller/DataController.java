@@ -8,13 +8,13 @@ import org.springframework.web.bind.annotation.RestController;
 public class DataController {
 
     // Accessible only by ADMIN role
-    @GetMapping("/api/admin/data")
+    @GetMapping("/api/admin/info")
     public String getAdminData() {
         return "Admin-specific protected data.";
     }
 
     // Accessible only by TEACHER role
-    @GetMapping("/api/teacher/data")
+    @GetMapping("/api/teacher/info")
     public String getTeacherData() {
         return "Teacher-specific protected data.";
     }
