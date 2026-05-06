@@ -5,9 +5,11 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.session.jdbc.config.annotation.web.http.EnableJdbcHttpSession;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
@@ -16,19 +18,45 @@ import java.util.Arrays;
 
 @Configuration
 @EnableWebSecurity
+@EnableJdbcHttpSession
 public class SecurityConfig {
+
+    private final LoginSuccessHandler loginSuccessHandler;
+    private final CustomLogoutSuccessHandler logoutSuccessHandler;
+    private final LoginFailureHandler loginFailureHandler;
+
+    public SecurityConfig(LoginSuccessHandler loginSuccessHandler, CustomLogoutSuccessHandler logoutSuccessHandler, LoginFailureHandler loginFailureHandler) {
+        this.loginSuccessHandler = loginSuccessHandler;
+        this.logoutSuccessHandler = logoutSuccessHandler;
+        this.loginFailureHandler = loginFailureHandler;
+    }
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
                 .csrf(csrf -> csrf.disable()) // Disable CSRF for stateless APIs
+                .cors(cors -> cors.configurationSource(corsConfigurationSource()))
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/api/public/**").permitAll()      // No auth needed
                         .requestMatchers("/api/admin/**").hasRole("ADMIN") // Authorization: Role-based
                         .requestMatchers("/api/teacher/**").hasAnyRole("TEACHER", "ADMIN")
                         .anyRequest().authenticated()                      // Authentication: Required for all else
                 )
-                .httpBasic(Customizer.withDefaults());
+                .formLogin(form -> form
+                        .loginProcessingUrl("/api/public/login")
+                        .successHandler(loginSuccessHandler)
+                        .failureHandler(loginFailureHandler)
+                        .permitAll()
+                )
+                .logout(logout -> logout
+                        .logoutUrl("/api/public/logout")
+                        .logoutSuccessHandler(logoutSuccessHandler)
+                        .deleteCookies("JSESSIONID")
+                        .permitAll()
+                )
+                .sessionManagement(session -> session
+                        .sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED)
+                );
 
         return http.build();
     }
