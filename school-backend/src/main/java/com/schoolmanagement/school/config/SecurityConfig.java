@@ -47,7 +47,8 @@ public class SecurityConfig {
                         .requestMatchers("/api/public/**").permitAll()      // No auth needed
                         .requestMatchers("/api/admin/**").hasRole("ADMIN") // Authorization: Role-based
                         .requestMatchers("/api/teacher/**").hasAnyRole("TEACHER", "ADMIN")
-                        .anyRequest().authenticated()                      // Authentication: Required for all else
+                        .requestMatchers("/api/students/**").authenticated() // Student endpoints require authentication
+                        .requestMatchers("/**").permitAll()                // Allow unknown paths to return 404 without auth
                 )
                 .formLogin(form -> form
                         .loginProcessingUrl("/api/public/login")
