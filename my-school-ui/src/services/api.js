@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const api = axios.create({
-  baseURL: 'http://localhost:8080',
+  baseURL: 'https://school-management-c5dg.onrender.com',
   withCredentials: true, // Required for JSESSIONID cookies
 });
 
