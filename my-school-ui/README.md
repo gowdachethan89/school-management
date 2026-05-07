@@ -54,12 +54,12 @@ The application communicates with the backend API. Currently, the API base URL i
 const API_BASE_URL = "https://school-management-c5dg.onrender.com/students";
 ```
 
-For local development, you may need to change this to point to your local backend (e.g., `http://localhost:8080/students`).
+For local development, you may need to change this to point to your local backend (e.g., `https://school-management-c5dg.onrender.com/students`).
 
 To make it configurable, consider using environment variables:
 
 1. Create a `.env` file in the root of the UI project.
-2. Add: `VITE_API_BASE_URL=http://localhost:8080/students`
+2. Add: `VITE_API_BASE_URL=https://school-management-c5dg.onrender.com/students`
 3. Update `App.jsx` to use: `const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || "https://school-management-c5dg.onrender.com/students";`
 
 ## Dockerfile

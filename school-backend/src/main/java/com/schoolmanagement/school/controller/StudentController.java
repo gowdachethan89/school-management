@@ -2,17 +2,16 @@ package com.schoolmanagement.school.controller;
 
 import com.schoolmanagement.school.entity.Student;
 import com.schoolmanagement.school.service.StudentService;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @RestController
-@RequestMapping("/students")
-@CrossOrigin(origins = {
-        "http://localhost:5173",
-        "http://localhost:3000",
-        "https://school-management-one-beryl.vercel.app"
-})// Allow your React app port
+@RequestMapping("/api/students")
 public class StudentController {
 
     private final StudentService service;
@@ -21,40 +20,37 @@ public class StudentController {
         this.service = service;
     }
 
-    // GET all students
     @GetMapping
-    public List<Student> getStudents() {
-        return service.getAllStudents();
+    public ResponseEntity<List<Student>> getStudents() {
+        return ResponseEntity.ok(service.getAllStudents());
     }
 
-    // GET student by ID
     @GetMapping("/{id}")
-    public Student getStudent(@PathVariable Long id) {
-        return service.getStudentById(id);
+    public ResponseEntity<Student> getStudent(@PathVariable Long id) {
+        return ResponseEntity.ok(service.getStudentById(id));
     }
 
-    // create students
     @PostMapping
-    public Student createStudent(@RequestBody Student student) {
-        return service.createStudent(student);
+    public ResponseEntity<Student> createStudent(@RequestBody Student student) {
+        Student created = service.createStudent(student);
+        return new ResponseEntity<>(created, HttpStatus.CREATED);
     }
-    
-    // update student by id
+
     @PutMapping("/{id}")
-    public Student updateStudent(@PathVariable Long id, @RequestBody Student student) {
-        return service.updateStudent(id, student);
+    public ResponseEntity<Student> updateStudent(@PathVariable Long id, @RequestBody Student student) {
+        return ResponseEntity.ok(service.updateStudent(id, student));
     }
 
-    // update student age by id
     @PatchMapping("/{id}")
-    public Student updateStudentAge(@PathVariable Long id, @RequestParam(name = "age") int age) {
-        return service.updateStudentAge(id, age);
+    public ResponseEntity<Student> updateStudentAge(@PathVariable Long id, @RequestParam int age) {
+        return ResponseEntity.ok(service.updateStudentAge(id, age));
     }
 
-    //delete student by id
     @DeleteMapping("/{id}")
-    public String deleteStudent(@PathVariable Long id) {
+    public ResponseEntity<Map<String, String>> deleteStudent(@PathVariable Long id) {
         service.deleteStudent(id);
-        return "Student deleted successfully";
+        Map<String, String> response = new HashMap<>();
+        response.put("message", "Student deleted successfully");
+        return ResponseEntity.ok(response);
     }
 }
