@@ -1,7 +1,5 @@
-package com.schoolmanagement.school.controller;
+package com.schoolmanagement.school.security;
 
-import com.schoolmanagement.school.entity.User;
-import com.schoolmanagement.school.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,7 +13,7 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/api/public")
-public class AuthController {
+public class UserController {
 
     @Autowired
     private UserService userService;

@@ -1,6 +1,5 @@
-package com.schoolmanagement.school.repository;
+package com.schoolmanagement.school.security;
 
-import com.schoolmanagement.school.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;

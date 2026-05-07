@@ -1,7 +1,7 @@
-package com.schoolmanagement.school.service;
+package com.schoolmanagement.school.config;
 
-import com.schoolmanagement.school.entity.User;
-import com.schoolmanagement.school.repository.UserRepository;
+import com.schoolmanagement.school.security.User;
+import com.schoolmanagement.school.security.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;

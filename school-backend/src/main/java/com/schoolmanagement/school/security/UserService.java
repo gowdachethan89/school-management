@@ -1,7 +1,5 @@
-package com.schoolmanagement.school.service;
+package com.schoolmanagement.school.security;
 
-import com.schoolmanagement.school.entity.User;
-import com.schoolmanagement.school.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
