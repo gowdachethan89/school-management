@@ -4,6 +4,8 @@ import com.schoolmanagement.school.entity.Student;
 import com.schoolmanagement.school.service.StudentService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
@@ -27,6 +29,14 @@ public class StudentController {
 
     @GetMapping
     public ResponseEntity<List<Student>> getStudents() {
+        // Debug logging
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        System.out.println("=== GET /api/students ===");
+        System.out.println("Authentication: " + (auth != null ? auth.getName() : "null"));
+        System.out.println("Authenticated: " + (auth != null && auth.isAuthenticated()));
+        System.out.println("Authorities: " + (auth != null ? auth.getAuthorities() : "null"));
+        System.out.println("========================");
+
         return ResponseEntity.ok(service.getAllStudents());
     }
 
