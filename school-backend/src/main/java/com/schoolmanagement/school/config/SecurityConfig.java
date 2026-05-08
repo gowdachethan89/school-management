@@ -25,7 +25,7 @@ import java.util.Arrays;
 
 @Configuration
 @EnableWebSecurity
-@EnableJdbcHttpSession
+// @EnableJdbcHttpSession - Disabled for testing header-based sessions with in-memory storage
 public class SecurityConfig {
 
     private final LoginSuccessHandler loginSuccessHandler;

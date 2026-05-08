@@ -69,10 +69,30 @@ public class SessionHeaderFilter extends OncePerRequestFilter {
      */
     private static class SessionIdWrapper extends jakarta.servlet.http.HttpServletRequestWrapper {
         private final String sessionId;
+        private final Cookie[] cookies;
         
         public SessionIdWrapper(HttpServletRequest request, String sessionId) {
             super(request);
             this.sessionId = sessionId;
+            
+            // Create a new cookie array with JSESSIONID
+            Cookie[] originalCookies = request.getCookies();
+            if (originalCookies != null && originalCookies.length > 0) {
+                this.cookies = new Cookie[originalCookies.length + 1];
+                System.arraycopy(originalCookies, 0, this.cookies, 0, originalCookies.length);
+            } else {
+                this.cookies = new Cookie[1];
+            }
+            
+            // Add JSESSIONID cookie from header
+            Cookie jsessionidCookie = new Cookie("JSESSIONID", sessionId);
+            jsessionidCookie.setPath("/");
+            this.cookies[this.cookies.length - 1] = jsessionidCookie;
+        }
+        
+        @Override
+        public Cookie[] getCookies() {
+            return this.cookies;
         }
         
         @Override
