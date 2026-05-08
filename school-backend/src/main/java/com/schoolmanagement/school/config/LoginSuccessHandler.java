@@ -22,10 +22,22 @@ public class LoginSuccessHandler implements AuthenticationSuccessHandler {
                                         Authentication authentication) throws IOException, ServletException {
         response.setStatus(HttpServletResponse.SC_OK);
         response.setContentType("application/json");
+        
+        // Get the session ID from the request
+        String sessionId = request.getSession().getId();
 
         Map<String, Object> data = new HashMap<>();
         data.put("message", "Login successful");
         data.put("username", authentication.getName());
+        data.put("sessionId", sessionId);
+        
+        // Explicitly set JSESSIONID header for client to use if cookies fail
+        response.setHeader("X-JSESSIONID", sessionId);
+        
+        System.out.println("=== LOGIN SUCCESS ===");
+        System.out.println("Username: " + authentication.getName());
+        System.out.println("Session ID: " + sessionId);
+        System.out.println("====================");
 
         response.getOutputStream().println(objectMapper.writeValueAsString(data));
     }

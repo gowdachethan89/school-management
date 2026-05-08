@@ -22,6 +22,7 @@ export const AuthProvider = ({ children }) => {
     await authService.logout();
     setUser(null);
     localStorage.removeItem('user');
+    localStorage.removeItem('sessionId'); // Clear session ID on logout
   };
 
   return (
