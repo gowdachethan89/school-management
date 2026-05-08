@@ -16,7 +16,7 @@ import java.util.Map;
         "http://localhost:5173",
         "http://localhost:3000",
         "https://school-management-one-beryl.vercel.app"
-})// Allow your React app port
+}, allowCredentials = "true")// Allow your React app port
 public class StudentController {
 
     private final StudentService service;
